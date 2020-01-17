@@ -1,5 +1,4 @@
-
-pragma solidity ^0.5.0;
+pragma solidity ^0.6.1;
 
 contract Testcontract {
 
@@ -9,7 +8,7 @@ contract Testcontract {
         firstNumber = _firstNumber;
     }
 
-    function viewNumber() external view returns(uint) {
+    function viewNumbers() external view returns(uint) {
         return firstNumber;
     }
 }
