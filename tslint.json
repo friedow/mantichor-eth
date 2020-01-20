@@ -14,6 +14,7 @@
     "interface-name": false,
     "ordered-imports": false,
     "object-literal-sort-keys": false,
-    "typedef": true
+    "typedef": true,
+    "no-console": false
   }
 }
