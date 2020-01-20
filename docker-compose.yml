@@ -1,0 +1,10 @@
+version: '3'
+services:
+    mantichor-share:
+        image: bptlab/mantichor-share:latest
+        ports:
+            - 3000:3000
+        environment:
+            - MONGO_HOST=mongo
+    mongo:
+        image: mongo:latest
