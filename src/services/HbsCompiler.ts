@@ -16,7 +16,22 @@ export default class HbsCompiler {
     HbsCompiler.registerPartials(partialsPath);
     const contractHbs = fs.readFileSync(contractPath, "utf8");
     const contractTemplate = Handlebars.compile(contractHbs);
-    return contractTemplate({});
+    return contractTemplate({
+      tasks: [
+        {
+          name: 'Task1',
+          role: 'role1'
+        },
+        {
+          name: 'Task2',
+          role: 'role2'
+        },
+        {
+          name: 'Task3',
+          role: 'role1'
+        },
+      ]
+    });
   }
 
 }

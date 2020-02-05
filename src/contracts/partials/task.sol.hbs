@@ -1,7 +1,5 @@
 function {{ name }}() public {
-  {{#each roles}}
-    require(participantHasRole(msg.sender, '{{ this }}'), 'You are not allowed to execute this task.');
-  {{/each}}
+  require(participantHasRole(msg.sender, '{{ role }}'), 'You are not allowed to execute this task.');
 
   emit taskExecuted(msg.sender, '{{ name }}');
 }
