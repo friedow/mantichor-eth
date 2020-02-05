@@ -11,25 +11,22 @@ export default class ContractCreator {
     const contractPath = path.resolve(contractsPath, contractFileName);
     const partialsPath = path.resolve(contractsPath, 'partials');
 
-    console.log('=========================');
     const contractCode = HbsCompiler.compile(contractPath, partialsPath);
+    console.log('=========================');
     console.log('Generated solidity code:');
     console.log(contractCode);
 
+    const compiledSolContract = SolCompiler.compile(contractFileName, contractCode);
     console.log('=========================');
-    const compiledSolConfig = SolCompiler.compile(contractFileName, contractCode);
-    console.log('Compiled solidity config:');
-    console.log(compiledSolConfig);
+    console.log('Solidity config compiled.');
 
-    console.log('=========================');
     const ganacheAdapter = new GanacheAdaper();
     const account = await ganacheAdapter.getDefaultAccount();
-    const contractAddresses = await ganacheAdapter.deployContracts(compiledSolConfig.contracts, account);
-    for (const contractAddress of contractAddresses) {
-      console.log(`Contract deployed at ${contractAddress}`);
-    }
+    const contractAddress = await ganacheAdapter.deployContract(compiledSolContract, account);
+    console.log('=========================');
+    console.log(`Contract deployed at ${contractAddress}`);
 
-    return contractAddresses[0];
+    return contractAddress;
   }
 
 }
