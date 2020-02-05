@@ -1,0 +1,79 @@
+struct Role {
+  bytes32 name;
+  address[] participants;
+}
+
+uint public rolesLength = 0;
+mapping(uint => Role) public roles;
+
+function findRoleIndex(bytes32 roleName) public view returns(uint) {
+  for (uint i = 0; i < rolesLength; i++) {
+    if (roles[i].name == roleName) {
+      return i;
+    }
+  }
+}
+
+function roleExists(bytes32 roleName) public view returns(bool) {
+  for (uint i = 0; i < rolesLength; i++) {
+    if (roles[i].name == roleName) {
+      return true;
+    }
+  }
+  return false;
+}
+
+function addRole(bytes32 roleName) internal {
+  require(msg.sender == owner, 'The caller of this function has to be the contract owner.');
+  require(!roleExists(roleName), 'Role already exists.');
+
+  roles[rolesLength].name = roleName;
+  rolesLength++;
+}
+
+function participantHasRole(address participant, bytes32 roleName) public returns(bool) {
+  require(roleExists(roleName), 'Role does not exist.');
+
+  uint roleIndex = findRoleIndex(roleName);
+  Role storage role = roles[roleIndex];
+
+  for (uint i = 0; i < role.participants.length; i++) {
+    if (participant == role.participants[i]) {
+      return true;
+    }
+  }
+  return false;
+}
+
+function grantRole(address participant, bytes32 roleName) public {
+  require(msg.sender == owner, 'The caller of this function has to be the contract owner.');
+  require(roleExists(roleName), 'Role does not exist.');
+  require(!participantHasRole(participant, roleName), 'The participant already has this role.');
+
+  uint roleIndex = findRoleIndex(roleName);
+  Role storage role = roles[roleIndex];
+  role.participants.push(participant);
+}
+
+function removeParticipant(uint participantIndex, Role storage role) internal {
+  address tempParticipant = role.participants[role.participants.length - 1];
+  role.participants[role.participants.length - 1] = role.participants[participantIndex];
+  role.participants[participantIndex] = tempParticipant;
+
+  role.participants.pop();
+}
+
+function revokeRole(address participant, bytes32 roleName) public {
+  require(msg.sender == owner, 'The caller of this function has to be the contract owner.');
+  require(roleExists(roleName), 'Role does not exist.');
+  require(participantHasRole(participant, roleName), 'The participant does not have this role.');
+
+  uint roleIndex = findRoleIndex(roleName);
+  Role storage role = roles[roleIndex];
+
+  for (uint participantIndex = 0; participantIndex < role.participants.length; participantIndex++) {
+    if (participant == role.participants[participantIndex]) {
+      removeParticipant(participantIndex, role);
+    }
+  }
+}
