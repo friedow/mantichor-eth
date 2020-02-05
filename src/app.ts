@@ -1,7 +1,7 @@
 import util from 'util';
 import express from 'express';
 import ganache from 'ganache-core';
-import ContractCreator from '@/services/ContractCreator';
+import ContractCreator from '@/services/ContractFactory';
 // import router from './routes/router';
 
 const expressPort = 3000;
