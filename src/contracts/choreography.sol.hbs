@@ -4,6 +4,11 @@ contract Choreography {
 
     {{> constructor}}
 
+    {{> events}}
+
     {{> accessManagement}}
 
+    {{#each tasks}}
+      {{> task this}}
+    {{/each}}
 }
