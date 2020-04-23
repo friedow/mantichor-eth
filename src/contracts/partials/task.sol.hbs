@@ -1,4 +1,5 @@
 function {{ name }}() public {
+  require(instanceIsActive(), 'Tasks can nly be executed on active process instances.');
   require(participantHasRole(msg.sender, '{{ role }}'), 'You are not allowed to execute this task.');
 
   emit taskExecuted(msg.sender, '{{ name }}');

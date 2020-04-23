@@ -31,7 +31,7 @@ function addRole(bytes32 roleName) internal {
   rolesLength++;
 }
 
-function participantHasRole(address participant, bytes32 roleName) public returns(bool) {
+function participantHasRole(address participant, bytes32 roleName) public view returns(bool) {
   require(roleExists(roleName), 'Role does not exist.');
 
   uint roleIndex = findRoleIndex(roleName);

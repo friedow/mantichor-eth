@@ -29,3 +29,15 @@ function stopInstance() public {
 
   state = States.stopped;
 }
+
+function instanceIsActive() public view returns(bool) {
+  return state == States.active;
+}
+
+function instanceIsSuspended() public view returns(bool) {
+  return state == States.suspended;
+}
+
+function instanceIsStopped() public view returns(bool) {
+  return state == States.stopped;
+}
