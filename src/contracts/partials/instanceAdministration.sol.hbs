@@ -1,0 +1,31 @@
+enum States { active, suspended, stopped }
+
+States state = States.active;
+
+function suspendInstance() public {
+  require(msg.sender == owner, 'The caller of this function has to be the contract owner.');
+  require(state == instanceStates.active, 'Only active instances can be suspended.');
+
+  state = States.suspended;
+}
+
+function suspendInstance() public {
+  require(msg.sender == owner, 'The caller of this function has to be the contract owner.');
+  require(state == instanceStates.active, 'Only active instances can be suspended.');
+
+  state = States.suspended;
+}
+
+function reinstateInstance() public {
+  require(msg.sender == owner, 'The caller of this function has to be the contract owner.');
+  require(state == instanceStates.suspended, 'Only suspended instances can be reinstated.');
+
+  state = States.active;
+}
+
+function stopInstance() public {
+  require(msg.sender == owner, 'The caller of this function has to be the contract owner.');
+  require(state == instanceStates.active || state == instanceStates.suspended, 'Only active or suspended instances can be stopped.');
+
+  state = States.stopped;
+}
