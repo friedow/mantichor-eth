@@ -25,24 +25,13 @@ export default class GanacheAdapter {
     return deployedContract.options.address;
   }
 
-  public async deployContracts(contracts: any, account: string): Promise<string[]> {
-    const contractAddresses = [];
-    for (const contractGroup in contracts) {
-      if (contracts.hasOwnProperty(contractGroup)) {
-        for (const contractName in contracts[contractGroup]) {
-          if (contracts[contractGroup].hasOwnProperty(contractName)) {
-            const contractAddress = await this.deployContract(contracts[contractGroup][contractName], account);
-            contractAddresses.push(contractAddress);
-          }
-        }
-      }
-    }
-    return contractAddresses;
-  }
-
   public async getDefaultAccount(): Promise<string> {
     const accounts = await this.web3.eth.getAccounts();
     return accounts[0];
+  }
+
+  public async executeTask(taskName: string, account: string): Promise<void> {
+
   }
 
 }

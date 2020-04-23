@@ -1,0 +1,5 @@
+function {{ name }}() public {
+  require(participantHasRole(msg.sender, '{{ role }}'), 'You are not allowed to execute this task.');
+
+  emit taskExecuted(msg.sender, '{{ name }}');
+}
